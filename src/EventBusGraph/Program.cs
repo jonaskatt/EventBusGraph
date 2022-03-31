@@ -48,9 +48,9 @@ cmd.SetHandler(async (string pathToSolution, string? pathToOutput) =>
     var graph = Formatter.JoinTypeNodes(joined);
 
     pathToOutput ??= "out.json";
-    var enumeratedGraph = graph as EventTypeGraphNode[] ?? graph.ToArray();
-    logger.LogInformation("Writing graph with {Nodes} nodes to {Path}", enumeratedGraph.Length, pathToOutput);
-    Exporter.ExportToFile(enumeratedGraph, pathToOutput);
+    var fileFormatted = Formatter.FormatToFileOutput(graph);
+    logger.LogInformation("Writing graph with {Nodes} nodes to {Path}", fileFormatted.Count, pathToOutput);
+    Exporter.ExportToFile(fileFormatted, pathToOutput);
 }, argument, outputOption);
 
 await cmd.InvokeAsync(args);
